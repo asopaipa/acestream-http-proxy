@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
-#FROM ubuntu:22.04
-FROM alpine
+FROM ubuntu:22.04
+#FROM alpine
 
 LABEL \
     maintainer="Martin Bjeldbak Madsen <me@martinbjeldbak.com>" \
@@ -21,12 +21,12 @@ COPY run-amd64.sh /tmp/files/
 
 
 
-#RUN apt-get update \
-#  && apt-get install --no-install-recommends -y \
-#      python3.10 ca-certificates wget sudo unzip findutils \
-#  && rm -rf /var/lib/apt/lists/*
+RUN apt-get update \
+  && apt-get install --no-install-recommends -y \
+      python3.10 ca-certificates wget sudo unzip findutils binutils gcc-multilib g++-multilib build-essential \
+  && rm -rf /var/lib/apt/lists/*
 
-RUN apk add --no-cache binutils python3 ca-certificates wget sudo unzip findutils bash
+#RUN apk add --no-cache binutils python3 ca-certificates wget sudo unzip findutils bash
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -40,7 +40,7 @@ RUN case "${TARGETPLATFORM}" in \
       && rm "acestream_${ACESTREAM_VERSION}.tar.gz" \
       && mv acestream /opt/acestream \
       && pushd /opt/acestream || exit \
-#      && bash ./install_dependencies.sh \
+      && bash ./install_dependencies.sh \
       && popd || exit \
       ;; \
     "linux/arm64") \
