@@ -1,6 +1,7 @@
 # syntax=docker/dockerfile:1
 
-FROM ubuntu:22.04
+#FROM ubuntu:22.04
+FROM alpine
 
 LABEL \
     maintainer="Martin Bjeldbak Madsen <me@martinbjeldbak.com>" \
