@@ -75,7 +75,6 @@ ENV ALLOW_REMOTE_ACCESS="no"
 ENV HTTP_PORT=6878
 ENV EXTRA_FLAGS=''
 
-COPY run.sh /
 
 ENTRYPOINT ["/usr/bin/bash"]
 CMD ["/run.sh"]
