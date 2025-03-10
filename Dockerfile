@@ -28,7 +28,7 @@ RUN apt-get update \
 
 RUN case "${TARGETPLATFORM}" in \
     "linux/amd64") \
-      && export ACESTREAM_VERSION="3.2.3_ubuntu_22.04_x86_64_py3.10" \
+      export ACESTREAM_VERSION="3.2.3_ubuntu_22.04_x86_64_py3.10" \
       && wget --progress=dot:giga "https://download.acestream.media/linux/acestream_${ACESTREAM_VERSION}.tar.gz" \
       && mkdir acestream \
       && cp -r /tmp/files/run-amd64.sh /run.sh \
@@ -40,7 +40,7 @@ RUN case "${TARGETPLATFORM}" in \
       && popd || exit \
       ;; \
     "linux/arm64") \
-      && export ACESTREAM_VERSION="3.2.8/org.acestream.node_arm64_v8" \
+      export ACESTREAM_VERSION="3.2.8/org.acestream.node_arm64_v8" \
       && wget --progress=dot:giga "https://github.com/asopaipa/acestream_arm_apk/releases/download/${ACESTREAM_VERSION}.apk" -O acestream.apk \
       && mkdir -p /opt/acestream \
       && mkdir -p /acestream \
@@ -53,7 +53,7 @@ RUN case "${TARGETPLATFORM}" in \
       && rm -rf /opt/acestream \
       ;; \
     "linux/arm/v7") \
-      && export ACESTREAM_VERSION="3.2.8/org.acestream.node_armv7" \
+      export ACESTREAM_VERSION="3.2.8/org.acestream.node_armv7" \
       && wget --progress=dot:giga "https://github.com/asopaipa/acestream_arm_apk/releases/download/${ACESTREAM_VERSION}.apk" -O acestream.apk \
       && mkdir -p /opt/acestream \
       && mkdir -p /acestream \
