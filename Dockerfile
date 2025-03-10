@@ -40,7 +40,7 @@ RUN case "${TARGETPLATFORM}" in \
       && rm "acestream_${ACESTREAM_VERSION}.tar.gz" \
       && mv acestream /opt/acestream \
       && pushd /opt/acestream || exit \
-      && bash ./install_dependencies.sh \
+#      && bash ./install_dependencies.sh \
       && popd || exit \
       ;; \
     "linux/arm64") \
