@@ -38,19 +38,23 @@ RUN case "${TARGETPLATFORM}" in \
       && export ACESTREAM_VERSION="3.2.8/org.acestream.node_arm64_v8" \
       && wget --progress=dot:giga "https://github.com/asopaipa/acestream_arm_apk/releases/download/${ACESTREAM_VERSION}.apk" -O acestream.apk \
       && mkdir -p /opt/acestream \
+      && mkdir -p /acestream \
       && unzip -o acestream.apk -d /opt/acestream \
-      && cd /opt/acestream \
-      && find /opt/acestream -name "*.zip" -type f -exec unzip -o {} -d ${0%/*} \; -exec rm {} \; \
+      && unzip -o /opt/acestream/assets/engine/arm64-v8a_private_res.zip -d /acestream \
+      && unzip -o /opt/acestream/assets/engine/arm64-v8a_private_py.zip -d /acestream \
       && rm -f acestream.apk \
+      && rm -rf /opt/acestream \
       ;; \
     "linux/arm/v7") \
       && export ACESTREAM_VERSION="3.2.8/org.acestream.node_armv7" \
       && wget --progress=dot:giga "https://github.com/asopaipa/acestream_arm_apk/releases/download/${ACESTREAM_VERSION}.apk" -O acestream.apk \
       && mkdir -p /opt/acestream \
+      && mkdir -p /acestream \
       && unzip -o acestream.apk -d /opt/acestream \
-      && cd /opt/acestream \
-      && find /opt/acestream -name "*.zip" -type f -exec unzip -o {} -d ${0%/*} \; -exec rm {} \; \
+      && unzip -o /opt/acestream/assets/engine/armeabi-v7a_private_res.zip -d /acestream \
+      && unzip -o /opt/acestream/assets/engine/armeabi-v7a_private_py.zip -d /acestream \
       && rm -f acestream.apk \
+      && rm -rf /opt/acestream \
       ;; \
     *) \
       echo "Not supported architecture: ${TARGETPLATFORM}" \
