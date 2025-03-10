@@ -22,10 +22,12 @@ COPY run-amd64.sh /tmp/files/
 
 
 
-RUN apt-get update \
-  && apt-get install --no-install-recommends -y \
-      python3.10 ca-certificates wget sudo unzip findutils \
-  && rm -rf /var/lib/apt/lists/*
+#RUN apt-get update \
+#  && apt-get install --no-install-recommends -y \
+#      python3.10 ca-certificates wget sudo unzip findutils \
+#  && rm -rf /var/lib/apt/lists/*
+
+RUN apk add --no-cache binutils python3.10 ca-certificates wget sudo unzip findutils
 
 RUN case "${TARGETPLATFORM}" in \
     "linux/amd64") \
