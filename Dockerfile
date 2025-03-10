@@ -10,18 +10,18 @@ LABEL \
     org.opencontainers.image.url="https://github.com/martinbjeldbak/acestream-http-proxy" \
     org.opencontainers.image.vendor="https://martinbjeldbak.com"
 
-# Usamos ARG para detectar la plataforma de destino durante la construcción
 ARG TARGETPLATFORM
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Instalar dependencias comunes
+COPY resources/main.py /tmp/arm-files/
+COPY resources/dnsproxyd.py /tmp/arm-files/
+
 RUN apt-get update \
   && apt-get install --no-install-recommends -y \
       python3.10 ca-certificates wget sudo unzip findutils \
   && rm -rf /var/lib/apt/lists/*
 
-# Instalar AceStream según la arquitectura
 RUN case "${TARGETPLATFORM}" in \
     "linux/amd64") \
       && export ACESTREAM_VERSION="3.2.3_ubuntu_22.04_x86_64_py3.10" \
@@ -42,6 +42,7 @@ RUN case "${TARGETPLATFORM}" in \
       && unzip -o acestream.apk -d /opt/acestream \
       && unzip -o /opt/acestream/assets/engine/arm64-v8a_private_res.zip -d /acestream \
       && unzip -o /opt/acestream/assets/engine/arm64-v8a_private_py.zip -d /acestream \
+      && cp -r /tmp/arm-files/* /acestream/ \
       && rm -f acestream.apk \
       && rm -rf /opt/acestream \
       ;; \
@@ -53,6 +54,7 @@ RUN case "${TARGETPLATFORM}" in \
       && unzip -o acestream.apk -d /opt/acestream \
       && unzip -o /opt/acestream/assets/engine/armeabi-v7a_private_res.zip -d /acestream \
       && unzip -o /opt/acestream/assets/engine/armeabi-v7a_private_py.zip -d /acestream \
+      && cp -r /tmp/arm-files/* /acestream/ \
       && rm -f acestream.apk \
       && rm -rf /opt/acestream \
       ;; \
