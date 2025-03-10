@@ -13,7 +13,6 @@ LABEL \
 
 ARG TARGETPLATFORM
 
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 COPY resources/main.py /tmp/files/
 COPY resources/dnsproxyd.py /tmp/files/
@@ -27,7 +26,9 @@ COPY run-amd64.sh /tmp/files/
 #      python3.10 ca-certificates wget sudo unzip findutils \
 #  && rm -rf /var/lib/apt/lists/*
 
-RUN apk add --no-cache binutils python3.10 ca-certificates wget sudo unzip findutils
+RUN apk add --no-cache binutils python3.10 ca-certificates wget sudo unzip findutils bash
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN case "${TARGETPLATFORM}" in \
     "linux/amd64") \
