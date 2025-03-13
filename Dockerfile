@@ -80,7 +80,7 @@ ENV HTTP_PORT=6878
 ENV EXTRA_FLAGS=''
 
 RUN chmod a+x /run.sh
-ENTRYPOINT ["/usr/bin/bash"]
+ENTRYPOINT ["/run.sh"]
 CMD ["/run.sh"]
 
 EXPOSE 6878/tcp
