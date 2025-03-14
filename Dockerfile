@@ -13,7 +13,7 @@ LABEL \
 ARG TARGETPLATFORM
 
 
-COPY resources/* /tmp/files/
+COPY resources/ /tmp/files/
 COPY run-arm.sh /tmp/files/
 COPY run-amd64.sh /tmp/files/
 
