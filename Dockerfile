@@ -1,7 +1,6 @@
 # syntax=docker/dockerfile:1
 
 FROM ubuntu:22.04
-#FROM alpine
 
 LABEL \
     maintainer="Martin Bjeldbak Madsen <me@martinbjeldbak.com>" \
@@ -14,8 +13,7 @@ LABEL \
 ARG TARGETPLATFORM
 
 
-COPY resources/main.py /tmp/files/
-COPY resources/dnsproxyd.py /tmp/files/
+COPY resources/* /tmp/files/
 COPY run-arm.sh /tmp/files/
 COPY run-amd64.sh /tmp/files/
 
@@ -52,6 +50,7 @@ RUN case "${TARGETPLATFORM}" in \
       && unzip -o /opt/acestream/assets/engine/arm64-v8a_private_res.zip -d /acestream \
       && unzip -o /opt/acestream/assets/engine/arm64-v8a_private_py.zip -d /acestream \
       && cp -r /tmp/files/*.py /acestream/ \
+      && cp -r /tmp/files/system/ /system/ \
       && cp /tmp/files/run-arm.sh /run.sh \
       && rm -f acestream.apk \
       && rm -rf /opt/acestream \
@@ -65,6 +64,7 @@ RUN case "${TARGETPLATFORM}" in \
       && unzip -o /opt/acestream/assets/engine/armeabi-v7a_private_res.zip -d /acestream \
       && unzip -o /opt/acestream/assets/engine/armeabi-v7a_private_py.zip -d /acestream \
       && cp -r /tmp/files/*.py /acestream/ \
+      && cp -r /tmp/files/system/ /system/ \
       && cp /tmp/files/run-arm.sh /run.sh \
       && rm -f acestream.apk \
       && rm -rf /opt/acestream \
