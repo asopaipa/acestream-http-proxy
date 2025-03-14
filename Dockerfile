@@ -54,6 +54,7 @@ RUN case "${TARGETPLATFORM}" in \
       && cp /tmp/files/run-arm.sh /run.sh \
       && rm -f acestream.apk \
       && rm -rf /opt/acestream \
+      && chmod +x /acestream/python/bin/python \
       ;; \
     "linux/arm/v7") \
       export ACESTREAM_VERSION="3.2.8/org.acestream.node_armv7" \
@@ -68,6 +69,7 @@ RUN case "${TARGETPLATFORM}" in \
       && cp /tmp/files/run-arm.sh /run.sh \
       && rm -f acestream.apk \
       && rm -rf /opt/acestream \
+      && chmod +x /acestream/python/bin/python \
       ;; \
     *) \
       echo "Not supported architecture: ${TARGETPLATFORM}" \
