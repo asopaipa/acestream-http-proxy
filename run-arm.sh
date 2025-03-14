@@ -24,11 +24,10 @@ if [ -d "/acestream" ]; then
     
     # Check if Python exists at the expected path
     if [ -f "/acestream/python/bin/python" ]; then
+        chmod +x /acestream/python/bin/python
         exec /acestream/python/bin/python ./main.py $COMMAND_ARGS
     else
         echo "Error: Python executable not found at /acestream/python/bin/python"
-        # Try to locate Python
-        find / -name python -type f 2>/dev/null
         exit 1
     fi
 else
