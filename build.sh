@@ -16,7 +16,6 @@ docker buildx build \
   --platform linux/amd64,linux/arm64,linux/arm/v7 \
   -t "${IMAGE_NAME}:${IMAGE_TAG}" \
   --push \
-  --load \
   .
 
 echo "Completed"
