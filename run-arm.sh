@@ -9,6 +9,15 @@ COMMAND_ARGS="--client-console --live-cache-type memory --live-mem-cache-size 10
 
 echo "Running arm image"
 
+export ACESTREAM_HOME="/acestream"
+export ANDROID_ROOT="/system"
+export ANDROID_DATA="/data"
+export PYTHONHOME="/acestream/python"
+export PYTHONPATH="/acestream/python/lib/stdlib:/acestream/python/lib/modules:/acestream/data:/acestream/modules.zip:/acestream/eggs-unpacked:/acestream/lib"
+export LD_LIBRARY_PATH="/system/lib64:/system/lib:/acestream/python/lib"
+export TEMP="/tmp"
+export PATH="/acestream/python/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
 # Check if the directory exists before changing to it
 if [ -d "/acestream" ]; then
     cd /acestream
