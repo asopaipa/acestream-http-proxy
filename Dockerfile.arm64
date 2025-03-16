@@ -4,7 +4,6 @@ FROM scratch
 
 ADD /resources/alpine-minirootfs-3.21.0-aarch64.tar.gz /
 
-ADD /resources/apk.static.arm64 /sbin/apk/apk.static
 
 RUN /sbin/apk add --initdb && \
     echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/main" > /etc/apk/repositories && \
