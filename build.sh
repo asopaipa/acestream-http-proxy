@@ -3,41 +3,47 @@
 IMAGE_NAME="algomlop/acestream-http-proxy"
 IMAGE_TAG="latest"
 
+# Detectar arquitectura
 ARCH=$(uname -m)
 
+# Asignar el Dockerfile según la arquitectura
 case "$ARCH" in
-    "x86_64") 
+    x86_64)
         DOCKERFILE="Dockerfile.amd64"
-        PLATFORM="linux/amd64"
         ;;
-    "aarch64") 
+    aarch64)
         DOCKERFILE="Dockerfile.arm64"
-        PLATFORM="linux/arm64"
         ;;
-    "armv7l") 
+    armv7l)
         DOCKERFILE="Dockerfile.armv7"
-        PLATFORM="linux/arm/v7"
         ;;
-    *) 
-        echo "Not supported architecture: $ARCH"
+    *)
+        echo "Arquitectura no soportada: $ARCH"
         exit 1
         ;;
 esac
 
+# Verificar si el Dockerfile específico existe
+if [ ! -f "$DOCKERFILE" ]; then
+    echo "Error: $DOCKERFILE no encontrado."
+    exit 1
+fi
 
+# Renombrar el Dockerfile temporalmente
+cp "$DOCKERFILE" Dockerfile
+
+# Crear builder si no existe
 if ! docker buildx inspect mybuilder &>/dev/null; then
-  echo "Creating builder multi-plataforma..."
+  echo "Creating new builder multi-platform..."
   docker buildx create --name mybuilder --use
 fi
 
 docker buildx use mybuilder
 
-echo "Building..."
-docker buildx build \
-  --platform $PLATFORM \
-  -f $DOCKERFILE \
-  -t "${IMAGE_NAME}:${IMAGE_TAG}" \
-  --push \
-  .
+echo "Building with $DOCKERFILE..."
+docker buildx build   --platform linux/amd64,linux/arm64,linux/arm/v7   -t "${IMAGE_NAME}:${IMAGE_TAG}"   --push   .
 
-echo "Completed."
+# Restaurar estado eliminando el Dockerfile temporal
+rm Dockerfile
+
+echo "Completed"
