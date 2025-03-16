@@ -12,7 +12,6 @@ RUN /sbin/apk add --initdb && \
 
 
 
-CMD ["/bin/sh"]
 
 LABEL \
     maintainer="Martin Bjeldbak Madsen <me@martinbjeldbak.com>" \
