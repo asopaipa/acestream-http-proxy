@@ -21,10 +21,9 @@ COPY run-amd64.sh /tmp/files/
 
 RUN apt-get update \
   && apt-get install --no-install-recommends -y \
-      python3.10 ca-certificates wget sudo unzip findutils binutils build-essential libc6 \
+      python3.10 ca-certificates wget sudo unzip findutils binutils build-essential libc6 file \
   && rm -rf /var/lib/apt/lists/*
 
-#RUN apk add --no-cache binutils python3 ca-certificates wget sudo unzip findutils bash
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
