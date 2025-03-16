@@ -1,16 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM scratch
-
-ADD /resources/alpine-minirootfs-3.21.0-aarch64.tar.gz /
-
-
-RUN /sbin/apk add --initdb && \
-    echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/main" > /etc/apk/repositories && \
-    /sbin/apk add --update unzip wget bash file
-
-
-
+FROM termux/termux-docker:latest
 
 LABEL \
     maintainer="Martin Bjeldbak Madsen <me@martinbjeldbak.com>" \
@@ -22,27 +12,29 @@ LABEL \
 
 ARG TARGETPLATFORM
 
+# Instalar dependencias necesarias
+RUN apt update && \
+    apt install -y unzip wget bash file && \
+    apt clean
 
 COPY resources/ /tmp/files/
 COPY run-arm.sh /run.sh
 
-
-
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN export ACESTREAM_VERSION="3.2.8/org.acestream.node_arm64_v8" \
-      && wget --progress=dot:giga "https://github.com/asopaipa/acestream_arm_apk/releases/download/${ACESTREAM_VERSION}.apk" -O acestream.apk \
-      && mkdir -p /opt/acestream \
-      && mkdir -p /acestream \
-      && unzip -o acestream.apk -d /opt/acestream \
-      && unzip -o /opt/acestream/assets/engine/arm64-v8a_private_res.zip -d /acestream \
-      && unzip -o /opt/acestream/assets/engine/arm64-v8a_private_py.zip -d /acestream \
-      && cp -r /tmp/files/*.py /acestream/ \
-      && cp -r /tmp/files/system/ /system/ \
-      && rm -f acestream.apk \
-      && rm -rf /opt/acestream \
-      && chmod +x /acestream/python/bin/python 
-
+    && wget --progress=dot:giga "https://github.com/asopaipa/acestream_arm_apk/releases/download/${ACESTREAM_VERSION}.apk" -O acestream.apk \
+    && mkdir -p /opt/acestream \
+    && mkdir -p /acestream \
+    && unzip -o acestream.apk -d /opt/acestream \
+    && unzip -o /opt/acestream/assets/engine/arm64-v8a_private_res.zip -d /acestream \
+    && unzip -o /opt/acestream/assets/engine/arm64-v8a_private_py.zip -d /acestream \
+    && cp -r /tmp/files/*.py /acestream/ \
+    && mkdir -p /system \
+    && cp -r /tmp/files/system/ /system/ \
+    && rm -f acestream.apk \
+    && rm -rf /opt/acestream \
+    && chmod +x /acestream/python/bin/python
 
 ENV ALLOW_REMOTE_ACCESS="no"
 ENV HTTP_PORT=6878
