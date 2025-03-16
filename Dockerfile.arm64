@@ -1,5 +1,7 @@
 # syntax=docker/dockerfile:1
 
+FROM scratch
+
 ADD alpine-minirootfs-3.21.0-aarch64.tar.gz /
 
 ADD /resources/apk.static.arm64 /sbin/apk/apk.static
