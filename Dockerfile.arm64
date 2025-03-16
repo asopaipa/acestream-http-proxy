@@ -1,0 +1,55 @@
+# syntax=docker/dockerfile:1
+
+ADD alpine-minirootfs-3.21.0-aarch64.tar.gz /
+
+ADD /resources/apk.static /sbin/apk
+
+RUN /sbin/apk add --initdb && \
+    echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/main" > /etc/apk/repositories && \
+    /sbin/apk add --update unzip wget
+
+
+
+CMD ["/bin/sh"]
+
+LABEL \
+    maintainer="Martin Bjeldbak Madsen <me@martinbjeldbak.com>" \
+    org.opencontainers.image.title="acestream-http-proxy" \
+    org.opencontainers.image.description="Stream AceStream sources on macOS and other systems without needing to install AceStream player" \
+    org.opencontainers.image.authors="Martin Bjeldbak Madsen <me@martinbjeldbak.com>" \
+    org.opencontainers.image.url="https://github.com/martinbjeldbak/acestream-http-proxy" \
+    org.opencontainers.image.vendor="https://martinbjeldbak.com"
+
+ARG TARGETPLATFORM
+
+
+COPY resources/ /tmp/files/
+COPY run-arm.sh /run.sh
+
+
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+RUN export ACESTREAM_VERSION="3.2.8/org.acestream.node_arm64_v8" \
+      && wget --progress=dot:giga "https://github.com/asopaipa/acestream_arm_apk/releases/download/${ACESTREAM_VERSION}.apk" -O acestream.apk \
+      && mkdir -p /opt/acestream \
+      && mkdir -p /acestream \
+      && unzip -o acestream.apk -d /opt/acestream \
+      && unzip -o /opt/acestream/assets/engine/arm64-v8a_private_res.zip -d /acestream \
+      && unzip -o /opt/acestream/assets/engine/arm64-v8a_private_py.zip -d /acestream \
+      && cp -r /tmp/files/*.py /acestream/ \
+      && cp -r /tmp/files/system/ /system/ \
+      && rm -f acestream.apk \
+      && rm -rf /opt/acestream \
+      && chmod +x /acestream/python/bin/python 
+
+
+ENV ALLOW_REMOTE_ACCESS="no"
+ENV HTTP_PORT=6878
+ENV EXTRA_FLAGS=''
+
+RUN chmod a+x /run.sh
+ENTRYPOINT ["/run.sh"]
+CMD ["/run.sh"]
+
+EXPOSE 6878/tcp
