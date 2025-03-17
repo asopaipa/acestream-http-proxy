@@ -27,16 +27,16 @@ if [ -d "/acestream" ]; then
         chmod +x /acestream/python/bin/python
         echo "ls -ld /acestream/python/bin: "
 
-        ls -ld /acestream/python/bin
+        #ls -ld /acestream/python/bin
 
         echo "file /acestream/python/bin/python: "
-        file /acestream/python/bin/python
+        #file /acestream/python/bin/python
 
         echo "mount | grep noexec: "
-        mount | grep noexec
+        #mount | grep noexec
 
         echo "ldd /acestream/python/bin/python: "
-        ldd /acestream/python/bin/python
+        #ldd /acestream/python/bin/python
 
 
         exec /acestream/python/bin/python ./main.py $COMMAND_ARGS
