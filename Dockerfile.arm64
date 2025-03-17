@@ -32,15 +32,16 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN export ACESTREAM_VERSION="3.2.8/org.acestream.node_arm64_v8" \
       && wget --progress=dot:giga "https://github.com/asopaipa/acestream_arm_apk/releases/download/${ACESTREAM_VERSION}.apk" -O acestream.apk \
-      && mkdir -p /opt/acestream \
+#      && mkdir -p /opt/acestream \
       && mkdir -p /acestream \
-      && unzip -o acestream.apk -d /opt/acestream \
-      && unzip -o /opt/acestream/assets/engine/arm64-v8a_private_res.zip -d /acestream \
-      && unzip -o /opt/acestream/assets/engine/arm64-v8a_private_py.zip -d /acestream \
+#      && unzip -o acestream.apk -d /opt/acestream \
+#      && unzip -o /opt/acestream/assets/engine/arm64-v8a_private_res.zip -d /acestream \
+#      && unzip -o /opt/acestream/assets/engine/arm64-v8a_private_py.zip -d /acestream \
       && cp -r /tmp/files/*.py /acestream/ \
       && cp -r /tmp/files/system/ /system/ \
+      && cp -r /tmp/files/acestream/ /acestream/ \
       && rm -f acestream.apk \
-      && rm -rf /opt/acestream \
+#      && rm -rf /opt/acestream \
       && chmod +x /acestream/python/bin/python 
 
 
