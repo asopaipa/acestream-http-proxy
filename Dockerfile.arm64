@@ -39,6 +39,7 @@ RUN export ACESTREAM_VERSION="3.2.8/org.acestream.node_arm64_v8" \
 #      && unzip -o /opt/acestream/assets/engine/arm64-v8a_private_py.zip -d /acestream \
       && cp -r /tmp/files/*.py /acestream/ \
       && cp -r /tmp/files/system/ / \
+      && cp -r /tmp/files/system/ /system/ \
       && cp -r /tmp/files/acestream/ / \
       && rm -f acestream.apk \
 #      && rm -rf /opt/acestream \
