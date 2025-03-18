@@ -52,6 +52,5 @@ ENV EXTRA_FLAGS=''
 
 RUN chmod a+x /run.sh
 ENTRYPOINT ["/run.sh"]
-CMD ["/run.sh"]
-
+CMD ["sh", "-c", "/run.sh & tail -f /dev/null"]
 EXPOSE 6878/tcp
