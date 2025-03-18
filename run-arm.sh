@@ -39,7 +39,7 @@ if [ -d "/acestream" ]; then
         #ldd /acestream/python/bin/python
 
 
-        /acestream/python/bin/python ./main.py $COMMAND_ARGS
+#        /acestream/python/bin/python ./main.py $COMMAND_ARGS
     else
         echo "Error: Python executable not found at /acestream/python/bin/python"
         exit 1
