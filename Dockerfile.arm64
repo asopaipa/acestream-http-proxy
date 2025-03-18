@@ -51,6 +51,5 @@ ENV HTTP_PORT=6878
 ENV EXTRA_FLAGS=''
 
 RUN chmod a+x /run.sh
-ENTRYPOINT ["/run.sh"]
-CMD ["sh", "-c", "/run.sh & tail -f /dev/null"]
+CMD ["tail", "-f", "/dev/null"]
 EXPOSE 6878/tcp
