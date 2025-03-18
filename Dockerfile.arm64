@@ -1,8 +1,4 @@
-# syntax=docker/dockerfile:1
-
-FROM scratch
-
-ADD /resources/alpine-minirootfs-3.21.0-aarch64.tar.gz /
+FROM alpine:3.14
 
 
 RUN /sbin/apk add --initdb && \
